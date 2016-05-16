@@ -18,6 +18,7 @@ environment:
 # scripts that run after cloning repository
 install:
   - set PATH=C:\Ruby%ruby_version%\bin;%PATH%
+  - set CXX=g++
   - git submodule update --init
   - ruby --version
   - gem --version
@@ -26,7 +27,7 @@ install:
   - bundle install --jobs=1 --retry=3
 
 build_script:
-  - bundle exec rake binary
+  - bundle exec rake binary CXX=g++
 
 test_script:
   - bundle exec rake spec
