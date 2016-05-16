@@ -19,7 +19,6 @@ environment:
 install:
   - cinst msysgit
   - set PATH=C:\Ruby%ruby_version%\bin;%PATH%
-  - set CXX=g++
   - git submodule update --init
   - ruby --version
   - gem --version
@@ -28,7 +27,7 @@ install:
   - bundle install --jobs=1 --retry=3
 
 build_script:
-  - bundle exec rake binary CXX=g++
+  - bundle exec rake binary
 
 test_script:
   - bundle exec rake spec

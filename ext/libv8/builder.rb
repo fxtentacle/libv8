@@ -104,6 +104,7 @@ module Libv8
       unless Gem::Platform.local.os =~ /mingw/
         ENV['PATH'] = "#{File.expand_path('../../../vendor/depot_tools', __FILE__)}:#{ENV['PATH']}"
         script_suffix = '.bat'
+        require "devkit"
       else
         ENV['PATH'] = "#{ENV['PATH']}:#{File.expand_path('../../../vendor/depot_tools', __FILE__)}"
       end
