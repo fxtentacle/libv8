@@ -1,4 +1,4 @@
-version: 3.16.14.8.b{build}
+version: 5.0.71.48.3.b{build}
 
 # Operating system (build VM template)
 os: Windows Server 2012
@@ -30,7 +30,6 @@ build_script:
 
 test_script:
   - bundle exec rake spec
-  
+
 artifacts:
   - path: pkg\*.gem
-

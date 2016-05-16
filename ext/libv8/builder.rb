@@ -100,18 +100,24 @@ module Libv8
     # https://chromium.googlesource.com/v8/v8.git#Getting-the-Code
     #
     def setup_build_deps!
-      ENV['PATH'] = "#{File.expand_path('../../../vendor/depot_tools', __FILE__)}:#{ENV['PATH']}"
+      script_suffix = ''
+      unless Gem::Platform.local.os =~ /mingw/
+        ENV['PATH'] = "#{File.expand_path('../../../vendor/depot_tools', __FILE__)}:#{ENV['PATH']}"
+        script_suffix = '.bat'
+      else
+        ENV['PATH'] = "#{ENV['PATH']}:#{File.expand_path('../../../vendor/depot_tools', __FILE__)}"
+      end
       Dir.chdir(File.expand_path('../../../vendor', __FILE__)) do
         unless Dir.exists? 'v8'
-          system "fetch v8" or fail "unable to fetch v8 source"
+          system "fetch#{script_suffix} v8" or fail "unable to fetch v8 source"
         else
-          system "gclient fetch" or fail "could not fetch v8 build dependencies commits"
+          system "gclient#{script_suffix} fetch" or fail "could not fetch v8 build dependencies commits"
         end
         Dir.chdir('v8') do
           unless system "git checkout #{source_version} -- ."
             fail "unable to checkout source for v8 #{source_version}"
           end
-          system "gclient sync" or fail "could not sync v8 build dependencies"
+          system "gclient#{script_suffix} sync" or fail "could not sync v8 build dependencies"
           system "git checkout Makefile" # Work around a weird bug on FreeBSD
         end
       end
