@@ -17,6 +17,7 @@ environment:
 
 # scripts that run after cloning repository
 install:
+  - cinst msysgit
   - set PATH=C:\Ruby%ruby_version%\bin;%PATH%
   - set CXX=g++
   - git submodule update --init
